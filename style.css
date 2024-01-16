@@ -1,0 +1,76 @@
+*{
+    border: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #1E1E1E;
+
+}
+
+#header-homepage{
+    /* background-color: blue; */
+    width: auto;
+    height: 20vh;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+#header-text{
+    /* background-color: green; */
+    color: white;
+    font-family: Arial;
+    font-size: 64px;
+}
+
+#body-homepage{
+    width: auto;
+    height: 30vh;
+    /* background-color: gray; */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+
+}
+
+#body-text{
+  color: white;
+  font-family: Arial;  
+  font-size: 48px;
+  text-align: center;
+}
+
+#form-homepage{
+    width: auto;
+    height:40vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#txtinput-form{
+    width: 400px;
+    font-size: 40px;
+    margin: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid white;
+    color: white;
+    outline: none;
+}
+
+#btninput-form{
+    margin-top: 100px;
+    width: 200px;
+    height: 90px;
+    font-size: 30px;
+    font-family: Arial;
+    color: white;
+    font-style: bold;
+    background-color: #D51007;
+    border: 2px solid white;
+    border-radius: 20px;
+}
