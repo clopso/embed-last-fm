@@ -1,30 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Embed FM</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script src='main.js'></script>
-</head>
-
-<body>
-    <header id="header-homepage">
-        <h1 id="header-text"> &lt/Embed <span style="color: #D51007">Last.fm</span>&gt </h1>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Consulte estatísticas públicas de qualquer perfil do Last.fm." />
+    <title>Last.fm Stats — seu histórico em números</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23e31b23%22/><text x=%2250%22 y=%2268%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>♪</text></svg>" />
+    <link rel="preconnect" href="https://ws.audioscrobbler.com" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="main.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Last.fm Stats — início"><span class="brand-mark" aria-hidden="true">◒</span><span>LAST<span>STATS</span></span></a>
+      <button class="icon-button" id="settingsButton" type="button" aria-label="Configurar chave da API" title="Configurar API">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.08A1.7 1.7 0 0 0 8.94 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.57 15 1.7 1.7 0 0 0 3 14H3v-4h.08A1.7 1.7 0 0 0 4.6 8.94a1.7 1.7 0 0 0-.34-1.88L4.2 7l2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.57 1.7 1.7 0 0 0 10 3V3h4v.08a1.7 1.7 0 0 0 1.06 1.52 1.7 1.7 0 0 0 1.88-.34L17 4.2 19.83 7l-.06.06A1.7 1.7 0 0 0 19.43 9 1.7 1.7 0 0 0 21 10h.08v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+      </button>
     </header>
-    
-    <div id="body-homepage">
-        <p id="body-text">Generete a embed code <br> to your <span style="color: #D51007">Last.fm</span> profile</p>
-    </div>
-
-    <footer>
-        <form id="form-homepage" action="####">
-
-            <input type="text" placeholder="Insert your username" id="txtinput-form">
-            
-            <button type="submit" id="btninput-form"> Next </button>
+    <main>
+      <section class="hero" id="hero">
+        <p class="eyebrow"><span></span> Seu histórico musical, decodificado</p>
+        <h1>O que você anda<br /><em>ouvindo?</em></h1>
+        <p class="hero-copy">Digite um usuário do Last.fm e transforme anos de scrobbles em uma visão clara dos artistas, álbuns e faixas que definem o seu som.</p>
+        <form class="search-form" id="searchForm">
+          <label class="sr-only" for="username">Usuário do Last.fm</label><span class="at" aria-hidden="true">@</span>
+          <input id="username" name="username" type="text" placeholder="usuario_lastfm" autocomplete="off" autocapitalize="none" spellcheck="false" required />
+          <button type="submit">Ver estatísticas <span aria-hidden="true">→</span></button>
         </form>
-    </footer>
-</body>
+        <p class="form-hint">Nenhuma senha é necessária. Usamos apenas dados públicos.</p>
+      </section>
+      <section class="dashboard" id="dashboard" hidden aria-live="polite">
+        <div class="profile-row">
+          <div class="profile"><div class="avatar" id="avatar"><span aria-hidden="true">♪</span></div><div><p class="eyebrow">Perfil encontrado</p><h2 id="profileName"></h2><a id="profileLink" href="#" target="_blank" rel="noreferrer">Abrir no Last.fm ↗</a></div></div>
+          <form class="compact-search" id="compactSearchForm"><label class="sr-only" for="compactUsername">Buscar outro usuário</label><input id="compactUsername" type="text" placeholder="Outro usuário" required /><button type="submit" aria-label="Buscar usuário">→</button></form>
+        </div>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="section-heading">
+          <div><p class="eyebrow">Ranking pessoal</p><h2>Os favoritos</h2></div>
+          <label class="period-select">Período<select id="periodSelect"><option value="7day">Últimos 7 dias</option><option value="1month">Último mês</option><option value="3month">Últimos 3 meses</option><option value="6month" selected>Últimos 6 meses</option><option value="12month">Último ano</option><option value="overall">Desde o início</option></select></label>
+        </div>
+        <div class="rankings">
+          <article class="panel featured-panel"><div class="panel-title"><span>01</span><h3>Top artistas</h3></div><div class="artist-list" id="topArtists"></div></article>
+          <article class="panel"><div class="panel-title"><span>02</span><h3>Top faixas</h3></div><ol class="track-list" id="topTracks"></ol></article>
+          <article class="panel"><div class="panel-title"><span>03</span><h3>Top álbuns</h3></div><ol class="album-list" id="topAlbums"></ol></article>
+        </div>
+        <article class="recent-panel">
+          <div class="section-heading small"><div><p class="eyebrow">Agora e há pouco</p><h2>Scrobbles recentes</h2></div><span class="live-label"><i></i> Ao vivo</span></div>
+          <div class="recent-list" id="recentTracks"></div>
+        </article>
+      </section>
+    </main>
+    <footer class="site-footer"><p>Dados fornecidos pela <a href="https://www.last.fm/api" target="_blank" rel="noreferrer">Last.fm API</a>.</p><p>Feito para quem leva música a sério.</p></footer>
+    <dialog id="apiDialog">
+      <form method="dialog" class="dialog-card" id="apiForm"><button class="dialog-close" value="cancel" aria-label="Fechar">×</button><p class="eyebrow">Configuração inicial</p><h2>Conecte a API do Last.fm</h2><p>A consulta pública exige uma API key gratuita. Ela fica salva somente neste navegador.</p><label for="apiKey">API key</label><input id="apiKey" type="text" placeholder="Cole sua chave aqui" autocomplete="off" required /><button class="remove-key" id="removeApiKey" type="button">Remover chave salva</button><div class="dialog-actions"><a href="https://www.last.fm/api/account/create" target="_blank" rel="noreferrer">Criar chave ↗</a><button value="save" type="submit">Salvar e continuar</button></div></form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
 </html>
